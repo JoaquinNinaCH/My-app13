@@ -1,0 +1,67 @@
+<div class="container mt-4">
+    <h2>Musicas</h2>
+  
+    <!-- Formulario para crear/editar un item -->
+    <form [formGroup]="musicaForm" (ngSubmit)="musicaForm.valid ? (currentItem._id ? updateItem(currentItem._id, musicaForm.value) : createItem(musicaForm.value)) : null">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" class="form-control" formControlName="name" required>
+          <div *ngIf="musicaForm.get('name')?.invalid && musicaForm.get('name')?.touched">
+            <small class="text-danger">Name is required.</small>
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <input type="text" class="form-control" formControlName="description" required>
+          <div *ngIf="musicaForm.get('description')?.invalid && musicaForm.get('description')?.touched">
+            <small class="text-danger">Description is required.</small>
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <label for="valoracion">Valoracion:</label>
+          <input type="number" class="form-control" formControlName="valoracion" required>
+          <div *ngIf="musicaForm.get('valoracion')?.invalid && musicaForm.get('valoracion')?.touched">
+            <small class="text-danger">Valoracion is required.</small>
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <label for="genero">Genero:</label>
+          <input type="text" class="form-control" formControlName="genero" required>
+          <div *ngIf="musicaForm.get('genero')?.invalid && musicaForm.get('genero')?.touched">
+            <small class="text-danger">Genero is required.</small>
+          </div>
+        </div>
+      
+        <button type="submit" class="btn btn-primary" [disabled]="!musicaForm.valid && !currentItem._id">Add</button>
+      </form>
+  
+    <hr>
+  
+    <!-- Lista de items -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripcion</th>
+          <th>Valoracion</th>
+          <th>Genero</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let musica of musicas">
+          <td>{{ musica.name }}</td>
+          <td>{{ musica.description }}</td>
+          <td>{{ musica.valoracion }}</td>
+          <td>{{ musica.genero }}</td>
+          <td>
+            <button class="btn btn-sm btn-primary" (click)="editItem(musica._id)">Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteItem(musica._id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
